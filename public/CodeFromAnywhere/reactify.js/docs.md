@@ -86,7 +86,7 @@ Here's a simple counter application using Reactify.js:
     <script src="https://reactify-js.vercel.app"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="renderRoot"></div>
 
     <script>
       const [getCount, setCount] = useState(0);

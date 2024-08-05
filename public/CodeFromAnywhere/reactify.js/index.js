@@ -71,13 +71,14 @@ function useStore(key, initialValue) {
 }
 
 /**
- * Renders the 'root' div
+ *
+ * Renders renderRoot and sets it to the innerHTML of the element with id 'renderRoot'
  */
 function reactify() {
-  if (typeof renderRoot !== "function") {
+  if (typeof renderFunction !== "function") {
     return;
   }
   stateIndex = 0; // Reset index before rendering
 
-  document.getElementById("root").innerHTML = renderRoot();
+  document.getElementById("renderRoot").innerHTML = renderRoot();
 }
