@@ -1,3 +1,4 @@
+const renderFunctions = [];
 const states = [];
 let stateIndex = 0;
 
@@ -25,7 +26,7 @@ function useState(initialValue) {
     } else {
       states[currentIndex] = newValue;
     }
-    reactify(); // Re-render after state change
+    renderAll(); // Re-render after state change
   };
 
   // Move to next state for next useState call
@@ -64,21 +65,28 @@ function useStore(key, initialValue) {
     } else {
       window.localStorage.setItem(key, JSON.stringify(newValue));
     }
-    reactify(); // Re-render after state change
+    renderAll(); // Re-render after state change
   };
   // Return current state and setState function
   return [getStore, setStore];
 }
 
+function renderAll() {
+  stateIndex = 0; // Reset index before rendering
+
+  renderFunctions.map((fn) => {
+    document.getElementById(fn.name).innerHTML = fn();
+  });
+}
+
 /**
- *
  * Renders renderRoot and sets it to the innerHTML of the element with id 'renderRoot'
  */
-function reactify() {
+function reactify(renderFunction = renderRoot) {
   if (typeof renderFunction !== "function") {
     return;
   }
   stateIndex = 0; // Reset index before rendering
-
-  document.getElementById("renderRoot").innerHTML = renderRoot();
+  renderFunctions.push(renderFunction);
+  document.getElementById(renderFunction.name).innerHTML = renderFunction();
 }
